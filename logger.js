@@ -4,6 +4,10 @@ const chalk = require('chalk');
 const onFinished = require('on-finished');
 const expressJwt = require('express-jwt');
 
+/* Load config */
+const dotenv = require('dotenv');
+dotenv.load({ path: '.env' });
+
 const validateJwt = expressJwt({secret: process.env.SECRET});
 
 var mail;
