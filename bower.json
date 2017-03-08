@@ -1,0 +1,17 @@
+{
+    "name": "app",
+    "version": "0.0.1",
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "^1.5.0",
+        "angular-route": "^1.5.0",
+        "angular-resource": "^1.5.0",
+        "socket.io-client": "^1.4.5"
+    }
+}
