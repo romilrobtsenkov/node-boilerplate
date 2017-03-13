@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const router = express.Router();
+
 const log = require('../logger');
 
 const User = require('../models/user');
@@ -12,9 +13,11 @@ const validateJwt = expressJwt({secret: jwtSecret});
 router.get('/me', validateJwt, function(req, res){
 
     // iat – This is the time that the token was created, as a unix timestamp offset in seconds.
-    // validate if token valid validateJwt returns req.user as object set to token
+    // exp – This is the time that the token expires, as a unix timestamp offset in seconds.
+    // validateJwt validates if token is valid, returns req.user as object set to token
 
     if(!req.user){
+        // never gets here acctually
         return res.status(401).send({error: 'Unauthorized'});
     }else{
 
@@ -24,20 +27,20 @@ router.get('/me', validateJwt, function(req, res){
         User.findOne({_id: req.user.id}, function(err, user) {
             if (err) { return res.json({error: err}); }
 
-            if(user){
-
-                var response = {
-                    user: user
-                };
-
-                log.info('token updated');
-                response.token = jwt.sign({
-                    id: user.id
-                }, jwtSecret);
-
-                return res.json(response);
+            if(!user){
+              return res.status(401).send({error: 'Unauthorized'});
             }
-            return res.status(401).send({error: 'Unauthorized'});
+
+            var response = {
+                user: user
+            };
+
+            log.info('token updated');
+            response.token = jwt.sign({
+                id: user.id
+            }, jwtSecret);
+
+            return res.json(response);
 
         });
 

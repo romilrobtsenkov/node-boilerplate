@@ -7,7 +7,7 @@ const jwtSecret = process.env.SECRET;
 const validateJwt = expressJwt({secret: jwtSecret});
 
 router.get('/', validateJwt, function(req, res){
-    console.log(req.user);
+    log.info(req.user.id);
     res.json({secret: "secret"});
 });
 

@@ -55,7 +55,7 @@ passport.use(new GoogleStrategy({
         User.findOne({ google: profile.id }, (err, existingUser) => {
             if (err) { return done(err); }
             if (existingUser) {
-                log.error('There is already a Google account that belongs to you. Sign in with that account or delete it, then link it with your current account.');
+                log.warning('There is already a Google account that belongs to you. Sign in with that account or delete it, then link it with your current account.');
                 done(err);
             } else {
                 User.findById(req.user.id, (err, user) => {
@@ -81,7 +81,7 @@ passport.use(new GoogleStrategy({
             User.findOne({ email: profile.emails[0].value }, (err, existingEmailUser) => {
                 if (err) { return done(err); }
                 if (existingEmailUser) {
-                    log.info('There is already an account using this email address. Sign in to that account and link it with Google manually from Account Settings.');
+                    log.warning('There is already an account using this email address. Sign in to that account and link it with Google manually from Account Settings.');
                     done(err);
                 } else {
                     const user = new User();

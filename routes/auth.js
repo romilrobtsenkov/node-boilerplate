@@ -15,7 +15,7 @@ router.get('/google/oauth2callback', (req, res, next) => {
     passport.authenticate('google', function(err, user, info) {
         if (err) { return next(err); }
         if (!user) {
-            req.flash('errors', info);
+            log.warning({ 'error': info });
             return res.redirect('/login');
         }
         var token = jwt.sign({
