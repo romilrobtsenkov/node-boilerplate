@@ -42,14 +42,12 @@ router.post('/local/login', (req, res, next) => {
         if (!user) {
             return res.json({ error: info});
         }
-        req.logIn(user, { session: false }, (err) => {
-            if (err) { return next(err); }
 
-            var token = jwt.sign({
-                id: user.id
-            }, jwtSecret);
-            res.json({token:token});
-        });
+        var token = jwt.sign({
+            id: user.id
+        }, jwtSecret);
+        res.json({token:token});
+
     })(req, res, next);
 });
 
@@ -77,13 +75,8 @@ router.post('/local/signup', (req, res, next) => {
         }
         user.save((err) => {
             if (err) { return next(err); }
-            req.logIn(user, (err) => {
-                if (err) {
-                    return next(err);
-                }
 
-                return res.json({ success: "successfully created user" });
-            });
+            return res.json({ success: "successfully created user" });
         });
     });
 });
