@@ -62,7 +62,7 @@ if (process.env.PRODUCTION) {
             subject: '['+process.env.APP_NAME+'][uncaughtException] - '+err.message,
             text: err.stack
         }, function (err) {
-            if (err) console.error(err);
+            if (err) log.error(err);
             log.warning('Email sent to developer about error');
             process.exit(1);
         });
